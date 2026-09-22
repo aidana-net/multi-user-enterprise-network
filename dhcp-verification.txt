@@ -1,0 +1,78 @@
+=== SEOUL: PC1 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 0090.2124.BCA0
+   IPv4 Address....................: 192.168.10.12
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.10.1
+   DHCP Servers....................: 192.168.99.10
+   DNS Servers.....................: 8.8.8.8
+
+
+=== SEOUL: PC2 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 0001.9754.77D4
+   IPv4 Address....................: 192.168.10.11
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.10.1
+   DHCP Servers....................: 192.168.99.10
+   DNS Servers.....................: 8.8.8.8
+
+
+=== BUSAN: PC1 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 0001.C79D.5B4B
+   IPv4 Address....................: 192.168.210.12
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.210.1
+   DHCP Servers....................: 192.168.99.10
+   DNS Servers.....................: 8.8.8.8
+
+
+=== BUSAN: PC2 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 000B.BE8A.CAC1
+   IPv4 Address....................: 192.168.210.11
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.210.1
+
+
+=== DAEGU: PC1 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 0001.4245.56DD
+   IPv4 Address....................: 192.168.110.12
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.110.1
+   DHCP Servers....................: 192.168.99.10
+   DNS Servers.....................: 8.8.8.8
+
+
+=== DAEGU: PC2 ===
+
+C:\>ipconfig /all
+
+FastEthernet0 Connection:(default port)
+   Physical Address................: 0001.C953.095C
+   IPv4 Address....................: 192.168.110.11
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.110.1
+
+
+Note: All three sites received addressing from the central DHCP
+server (192.168.99.10) in the Seoul Management VLAN, confirming
+that ip helper-address relay works correctly across OSPF-routed
+links to Busan and Daegu.
