@@ -1,0 +1,232 @@
+!
+version 12.2(37)SE1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Switch
+!
+no profinet
+!
+ip routing
+!
+spanning-tree mode pvst
+!
+interface FastEthernet0/1
+ ip dhcp snooping limit rate 10
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky 0001.C79D.5B4B
+!
+interface FastEthernet0/2
+ ip dhcp snooping limit rate 10
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky 000B.BE8A.CAC1
+!
+interface FastEthernet0/3
+ ip dhcp snooping limit rate 10
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/4
+ ip dhcp snooping limit rate 10
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/5
+ ip dhcp snooping limit rate 10
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/6
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky 00D0.D368.3642
+!
+interface FastEthernet0/7
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/8
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/9
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/10
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky 0060.5C79.D96D
+!
+interface FastEthernet0/11
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/12
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/13
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/14
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/15
+ ip dhcp snooping limit rate 10
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/16
+ ip dhcp snooping limit rate 10
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/17
+ ip dhcp snooping limit rate 10
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/18
+ ip dhcp snooping limit rate 10
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/19
+ ip dhcp snooping limit rate 10
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/20
+ ip dhcp snooping limit rate 10
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ no switchport
+ ip address 10.0.1.2 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ mac-address 0006.2ae3.5a01
+ ip address 192.168.210.1 255.255.255.0
+ ip helper-address 192.168.99.10
+!
+interface Vlan20
+ mac-address 0006.2ae3.5a02
+ ip address 192.168.220.1 255.255.255.0
+ ip helper-address 192.168.99.10
+!
+interface Vlan30
+ mac-address 0006.2ae3.5a03
+ ip address 192.168.230.1 255.255.255.0
+ ip helper-address 192.168.99.10
+!
+router ospf 10
+ log-adjacency-changes
+ network 192.168.210.0 0.0.0.255 area 0
+ network 192.168.220.0 0.0.0.255 area 0
+ network 192.168.230.0 0.0.0.255 area 0
+ network 10.0.1.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+end
