@@ -1,0 +1,139 @@
+{\rtf1\ansi\ansicpg949\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 !\
+version 15.1\
+no service timestamps log datetime msec\
+no service timestamps debug datetime msec\
+no service password-encryption\
+!\
+hostname Router\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+no ip cef\
+no ipv6 cef\
+!\
+!\
+!\
+!\
+license udi pid CISCO1941/K9 sn FTX15248IA5-\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+spanning-tree mode pvst\
+!\
+!\
+!\
+!\
+!\
+!\
+interface GigabitEthernet0/0\
+ no ip address\
+ duplex auto\
+ speed auto\
+!\
+interface GigabitEthernet0/0.10\
+ encapsulation dot1Q 10\
+ ip address 192.168.10.1 255.255.255.0\
+ ip helper-address 192.168.99.10\
+!\
+interface GigabitEthernet0/0.20\
+ encapsulation dot1Q 20\
+ ip address 192.168.20.1 255.255.255.0\
+ ip helper-address 192.168.99.10\
+!\
+interface GigabitEthernet0/0.30\
+ encapsulation dot1Q 30\
+ ip address 192.168.30.1 255.255.255.0\
+ ip helper-address 192.168.99.10\
+!\
+interface GigabitEthernet0/0.99\
+ encapsulation dot1Q 99\
+ ip address 192.168.99.1 255.255.255.0\
+!\
+interface GigabitEthernet0/1\
+ no ip address\
+ duplex auto\
+ speed auto\
+ shutdown\
+!\
+interface Serial0/1/0\
+ ip address 10.0.0.1 255.255.255.252\
+!\
+interface Serial0/1/1\
+ ip address 10.0.0.5 255.255.255.252\
+!\
+interface Vlan1\
+ no ip address\
+ ip helper-address 192.168.99.10\
+ shutdown\
+!\
+interface Vlan10\
+ mac-address 0001.4280.2501\
+ no ip address\
+ ip helper-address 192.168.99.10\
+!\
+interface Vlan20\
+ mac-address 0001.4280.2502\
+ no ip address\
+ ip helper-address 192.168.99.10\
+!\
+interface Vlan30\
+ mac-address 0001.4280.2503\
+ no ip address\
+ ip helper-address 192.168.99.10\
+!\
+router ospf 10\
+ log-adjacency-changes\
+ network 10.0.0.4 0.0.0.3 area 0\
+ network 10.0.0.0 0.0.0.3 area 0\
+ network 192.168.1.0 0.0.0.255 area 0\
+ network 192.168.10.0 0.0.0.255 area 0\
+ network 192.168.20.0 0.0.0.255 area 0\
+ network 192.168.30.0 0.0.0.255 area 0\
+ network 192.168.99.0 0.0.0.255 area 0\
+!\
+ip classless\
+!\
+ip flow-export version 9\
+!\
+!\
+!\
+!\
+!\
+!\
+!\
+line con 0\
+!\
+line aux 0\
+!\
+line vty 0 4\
+ login\
+!\
+!\
+!\
+end\
+\
+}
