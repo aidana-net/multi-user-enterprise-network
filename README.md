@@ -1,4 +1,4 @@
-# Multi-Site Enterprise Network with VLANs and OSPF
+# Multi-Site Enterprise Network 
 
 A Cisco Packet Tracer project simulating a 3-site enterprise network (Seoul HQ, Busan Branch, Daegu Branch) with VLAN segmentation, two different inter-VLAN routing methods, centralized DHCP, OSPF routing between sites, and Layer 2 security hardening.
 
