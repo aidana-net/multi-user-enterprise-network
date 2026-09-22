@@ -27,7 +27,6 @@ Two different inter-VLAN routing approaches are demonstrated intentionally:
 - **Seoul HQ** uses a Layer 2 switch, so inter-VLAN routing is done via **Router-on-a-Stick** (subinterfaces on the router).
 - **Busan** and **Daegu** branches use Layer 3 switches, so inter-VLAN routing is done via **SVIs (Switched Virtual Interfaces)** directly on the switch.
 
-ACL configuration was intentionally left out of this project — it will be covered separately in a dedicated **NAT + ACL** project.
 
 ## 2. Network Topology
 
