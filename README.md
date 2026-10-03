@@ -1,134 +1,181 @@
-# Multi-Site Enterprise Network 
+# Multi-Site Enterprise Network
 
-A Cisco Packet Tracer project simulating a 3-site enterprise network (Seoul HQ, Busan Branch, Daegu Branch) with VLAN segmentation, two different inter-VLAN routing methods, centralized DHCP, OSPF routing between sites, and Layer 2 security hardening.
+**Cisco Packet Tracer를 활용한 멀티사이트 기업 네트워크 구축 프로젝트**
 
-## Table of Contents
+Seoul HQ, Busan Branch, Daegu Branch로 구성된 3개 사이트의 기업 네트워크를 시뮬레이션한 프로젝트입니다. VLAN을 활용한 네트워크 분리, 두 가지 Inter-VLAN Routing 방식, 중앙 집중식 DHCP, 사이트 간 OSPF Routing, Layer 2 보안 기능을 구현했습니다.
 
-1. [Overview](#1-overview)
-2. [Network Topology](#2-network-topology)
-3. [VLAN Table](#3-vlan-table)
-4. [IP Addressing Scheme](#4-ip-addressing-scheme)
-5. [Implementation](#5-implementation)
-   - [5.1 Seoul HQ](#51-seoul-hq)
-   - [5.2 Busan Branch](#52-busan-branch)
-   - [5.3 Daegu Branch](#53-daegu-branch)
+## 목차
+
+1. [프로젝트 개요](#1-프로젝트-개요)
+2. [네트워크 토폴로지](#2-네트워크-토폴로지)
+3. [VLAN 구성](#3-vlan-구성)
+4. [IP 주소 구성](#4-ip-주소-구성)
+5. [구현](#5-구현)
+
+   * [5.1 Seoul HQ](#51-seoul-hq)
+   * [5.2 Busan Branch](#52-busan-branch)
+   * [5.3 Daegu Branch](#53-daegu-branch)
 6. [Routing (OSPF)](#6-routing-ospf)
 7. [DHCP](#7-dhcp)
 8. [Layer 2 Security](#8-layer-2-security)
-9. [Testing and Validation](#9-testing-and-validation)
-10. [Known Limitations](#10-known-limitations)
-11. [Files](#11-files)
+9. [테스트 및 검증](#9-테스트-및-검증)
+10. [파일 구성](#10-파일-구성)
 
-## 1. Overview
+---
 
-This project demonstrates a small multi-site enterprise network built in Cisco Packet Tracer. Each site is segmented into department-based VLANs (HR, Sales, IT, and a Management VLAN at HQ), with all three sites connected over point-to-point serial links and OSPF as the dynamic routing protocol. A centralized DHCP server at Seoul HQ provides IP addressing to all VLANs across all three sites via DHCP relay.
+## 1. 프로젝트 개요
 
-Two different inter-VLAN routing approaches are demonstrated intentionally:
-- **Seoul HQ** uses a Layer 2 switch, so inter-VLAN routing is done via **Router-on-a-Stick** (subinterfaces on the router).
-- **Busan** and **Daegu** branches use Layer 3 switches, so inter-VLAN routing is done via **SVIs (Switched Virtual Interfaces)** directly on the switch.
+Cisco Packet Tracer를 활용하여 소규모 멀티사이트 기업 네트워크를 구축했습니다.
 
+각 사이트는 부서별 VLAN으로 네트워크를 분리했으며, Seoul HQ에는 HR, Sales, IT, Management VLAN을 구성했습니다. 세 사이트는 Point-to-Point Serial Link로 연결하고, 사이트 간 Dynamic Routing을 위해 OSPF를 사용했습니다.
 
-## 2. Network Topology
+또한 Seoul HQ에 중앙 DHCP Server를 구성하여 DHCP Relay를 통해 세 사이트의 모든 VLAN에 IP 주소를 자동으로 할당하도록 구현했습니다.
 
-![Network Topology Diagram](topology.png)
+### Inter-VLAN Routing 구성
 
-## 3. VLAN Table
+서로 다른 두 가지 Inter-VLAN Routing 방식을 비교하고 구현했습니다.
+
+* **Seoul HQ**: Layer 2 Switch를 사용하며, Router의 Subinterface를 활용한 **Router-on-a-Stick** 방식으로 Inter-VLAN Routing을 구성했습니다.
+* **Busan Branch / Daegu Branch**: Layer 3 Switch를 사용하며, Switch의 **SVI (Switched Virtual Interface)***를*통해 Inter-VLAN Routing을 구성했습니다.
+
+---
+
+## 2. 네트워크 토폴로지
+
+[네트워크 토폴로지 보기](https://github.com/aidana-net/multi-user-enterprise-network/blob/main/topology.png)
+
+---
+
+## 3. VLAN 구성
 
 | Site  | VLAN | Name       | Network          |
-| ----- | ---- | ---------- | ---------------- |
-| Seoul | 10   | HR         | 192.168.10.0/24  |
-| Seoul | 20   | Sales      | 192.168.20.0/24  |
-| Seoul | 30   | IT         | 192.168.30.0/24  |
-| Seoul | 99   | Management | 192.168.99.0/24  |
-| Busan | 10   | HR         | 192.168.210.0/24 |
-| Busan | 20   | Sales      | 192.168.220.0/24 |
-| Busan | 30   | IT         | 192.168.230.0/24 |
-| Daegu | 10   | HR         | 192.168.110.0/24 |
-| Daegu | 20   | Sales      | 192.168.120.0/24 |
-| Daegu | 30   | IT         | 192.168.130.0/24 |
+| ----- | ---: | ---------- | ---------------- |
+| Seoul |   10 | HR         | 192.168.10.0/24  |
+| Seoul |   20 | Sales      | 192.168.20.0/24  |
+| Seoul |   30 | IT         | 192.168.30.0/24  |
+| Seoul |   99 | Management | 192.168.99.0/24  |
+| Busan |   10 | HR         | 192.168.210.0/24 |
+| Busan |   20 | Sales      | 192.168.220.0/24 |
+| Busan |   30 | IT         | 192.168.230.0/24 |
+| Daegu |   10 | HR         | 192.168.110.0/24 |
+| Daegu |   20 | Sales      | 192.168.120.0/24 |
+| Daegu |   30 | IT         | 192.168.130.0/24 |
 
-## 4. IP Addressing Scheme
+---
 
-### Point-to-Point (Serial) Links
+## 4. IP 주소 구성
 
-| Link          | Network     | Seoul Side   | Remote Side           |
-| ------------- | ----------- | ------------ | ---------------------- |
-| Seoul ↔ Busan | 10.0.0.0/30 | .1 (Se0/1/0) | .2 (r1 Se0/1/0)        |
-| Seoul ↔ Daegu | 10.0.0.4/30 | .5 (Se0/1/1) | .6 (Router2 Se0/1/0)   |
+### Point-to-Point (Serial) Link
 
-### Branch Router ↔ L3 Switch Uplinks
+| Link          | Network     | Seoul Side   | Remote Side          |
+| ------------- | ----------- | ------------ | -------------------- |
+| Seoul ↔ Busan | 10.0.0.0/30 | .1 (Se0/1/0) | .2 (r1 Se0/1/0)      |
+| Seoul ↔ Daegu | 10.0.0.4/30 | .5 (Se0/1/1) | .6 (Router2 Se0/1/0) |
 
-| Link                       | Network     |
-| -------------------------- | ----------- |
-| Busan r1 ↔ L3 Switch       | 10.0.1.0/30 |
-| Daegu Router2 ↔ L3 Switch  | 10.0.2.0/30 |
+### Branch Router ↔ L3 Switch Uplink
 
-## 5. Implementation
+| Link                      | Network     |
+| ------------------------- | ----------- |
+| Busan r1 ↔ L3 Switch      | 10.0.1.0/30 |
+| Daegu Router2 ↔ L3 Switch | 10.0.2.0/30 |
+
+---
+
+## 5. 구현
 
 ### 5.1 Seoul HQ
 
-- **Switch2** (Layer 2 switch) — hosts VLANs 10 (HR), 20 (Sales), 30 (IT), and 99 (Management), where the DHCP server (`Server0`) lives.
-- **Router** — connected to Switch2 via a trunk on Gig0/1, configured with subinterfaces for **Router-on-a-Stick** inter-VLAN routing. Also connects to Busan and Daegu over two serial links (Se0/1/0, Se0/1/1).
+* **Switch2** — Layer 2 Switch로 VLAN 10 (HR), VLAN 20 (Sales), VLAN 30 (IT), VLAN 99 (Management)을*구성했습니다. DHCP Server (`Server0`)는 Management VLAN에 위치합니다.
+* **Router** — Gig0/1을 통해 Switch2와 Trunk로 연결하고, Router의 Subinterface를 구성하여 **Router-on-a-Stick 방식의 Inter-VLAN Routing**을 구현했습니다. 또한 Se0/1/0, Se0/1/1 Serial Link를 통해 Busan과 Daegu에 연결했습니다.
 
 ### 5.2 Busan Branch
 
-- **L3 Switch** — hosts VLANs 10 (HR), 20 (Sales), 30 (IT), configured with **SVIs** for local inter-VLAN routing.
-- **r1** — connects the branch to Seoul HQ over a serial link, and to the L3 switch via a routed Gig0/0–Gig0/1 uplink (10.0.1.0/30).
+* **L3 Switch** — VLAN 10 (HR), VLAN 20 (Sales), VLAN 30 (IT)을*구성하고,*&#xAC01; VLAN의 SVI를 통해 로컬 Inter-VLAN Routing을 구현했습니다.
+* **r1** — Serial Link를 통해 Seoul HQ와 연결하고, Gig0/0–Gig0/1 Routed Uplink를 통해 L3 Switch와 연결했습니다. Uplink Network는 `10.0.1.0/30`을 사용했습니다.
 
 ### 5.3 Daegu Branch
 
-- **L3 Switch** — hosts VLANs 10 (HR), 20 (Sales), 30 (IT), configured with **SVIs** for local inter-VLAN routing.
-- **Router2** — connects the branch to Seoul HQ over a serial link, and to the L3 switch via a routed Gig0/0–Gig0/1 uplink (10.0.2.0/30).
+* **L3 Switch** — VLAN 10 (HR), VLAN 20 (Sales), VLAN 30 (IT)을*구성하고,*&#xAC01; VLAN의 SVI를 통해 로컬 Inter-VLAN Routing을 구현했습니다.
+* **Router2** — Serial Link를 통해 Seoul HQ와 연결하고, Gig0/0–Gig0/1 Routed Uplink를 통해 L3 Switch와 연결했습니다. Uplink Network는 `10.0.2.0/30`을 사용했습니다.
+
+---
 
 ## 6. Routing (OSPF)
 
-OSPF is configured between the three site routers (Seoul Router, Busan `r1`, Daegu `Router2`) to advertise all VLAN networks and the point-to-point links, providing full reachability between all three sites.
+세 사이트의 Router 간에 OSPF를 구성했습니다.
+
+Seoul Router, Busan `r1`, Daegu `Router2`가 각각의 VLAN Network와 Point-to-Point Link Network를 OSPF를 통해 광고하도록 구성하여 세 사이트 간의 전체적인 네트워크 통신이 가능하도록 구현했습니다.
+
+---
 
 ## 7. DHCP
 
-A DHCP server is hosted in the Seoul Management VLAN (99). All VLANs across all three sites — including Busan and Daegu — receive their addressing from this central server via `ip helper-address` (DHCP relay) configured on each VLAN's gateway interface.
+Seoul의 Management VLAN (99)에 DHCP Server를 구성했습니다.
+
+Busan과 Daegu를 포함한 세 사이트의 모든 VLAN이 중앙 DHCP Server를 통해 IP 주소를 할당받을 수 있도록 각 VLAN의 Gateway Interface에 `ip helper-address`를 설정하여 **DHCP Relay**를 구성했습니다.
+
+---
 
 ## 8. Layer 2 Security
 
-| Site       | Port Security            | DHCP Snooping | Dynamic ARP Inspection (DAI) |
-| ---------- | ------------------------- | -------------- | ------------------------------- |
-| Seoul (L2) | ✅                         | ✅              | ✅ (trusted on uplink to router) |
-| Busan (L3) | ✅ (violation: restrict)   | ❌ removed      | ❌ not applicable on L3          |
-| Daegu (L3) | ✅ (violation: protect)    | ❌ removed      | ❌ not applicable on L3          |
+| Site       | Port Security           | DHCP Snooping | Dynamic ARP Inspection (DAI)      |
+| ---------- | ----------------------- | ------------- | --------------------------------- |
+| Seoul (L2) | ✅                       | ✅             | ✅ (Router 연결 Uplink를 Trusted로 설정) |
+| Busan (L3) | ✅ (Violation: Restrict) | ❌ 제거          | ❌ L3에서는 적용하지 않음                   |
+| Daegu (L3) | ✅ (Violation: Protect)  | ❌ 제거          | ❌ L3에서는 적용하지 않음                   |
 
-DHCP Snooping and DAI are Layer 2 features tied to switchport/VLAN context, so they were only fully implemented at Seoul HQ (the L2 switch). On the Busan and Daegu L3 switches, DHCP Snooping was initially attempted but ended up removed — see [Known Limitations](#10-known-limitations) below.
+DHCP Snooping과 DAI는 Switchport 및 VLAN 환경에 기반한 Layer 2 기능이므로 Seoul HQ의 Layer 2 Switch에서만 전체적으로 구현했습니다.
 
-## 9. Testing and Validation
+Busan과 Daegu의 Layer 3 Switch에서는 DHCP Snooping을 처음에 구성하려고 시도했지만 이후 제거했습니다.
 
-Device configs and command output confirming the network works end-to-end are in [`/configs`](configs/) and [`/results`](results/):
+---
 
-**Configs** (`show running-config` per device):
-- [`configs/Seoul-Router.txt`](configs/Seoul-Router.txt), [`configs/Seoul-Switch.txt`](configs/Seoul-Switch.txt)
-- [`configs/Busan-Router.txt`](configs/Busan-Router.txt), [`configs/Busan-Switch.txt`](configs/Busan-Switch.txt)
-- [`configs/Daegu-Router.txt`](configs/Daegu-Router.txt), [`configs/Daegu-Switch.txt`](configs/Daegu-Switch.txt)
+## 9. 테스트 및 검증
 
-**Results**:
-- [`results/ospf-neighbors-and-routes.txt`](results/ospf-neighbors-and-routes.txt) — `show ip ospf neighbor` / `show ip route` on all three routers, confirming FULL adjacencies and complete cross-site routes
-- [`results/port-security.txt`](results/port-security.txt) — `show port-security` on all three switches, confirming sticky MAC learning
-- [`results/seoul-dhcp-snooping.txt`](results/seoul-dhcp-snooping.txt) — `show ip dhcp snooping` on the Seoul switch
-- [`results/dhcp-verification.txt`](results/dhcp-verification.txt) — `ipconfig /all` from PCs at all three sites, confirming they all received addressing from the central DHCP server via relay
-- [`results/site-to-site-ping.txt`](results/site-to-site-ping.txt) — cross-site ping tests (Busan↔Seoul, Busan↔Daegu, Seoul↔Daegu, Seoul↔Busan)
+네트워크가 정상적으로 동작하는지 확인하기 위해 각 장비의 Configuration과 Command Output을 확인했습니다.
 
-**Note on ping results**: the first packet in most cross-site ping tests timed out due to ARP resolution delay (the sending device had not yet cached the destination's MAC address). Once the ARP entry was learned, subsequent packets succeeded with 0% loss — this is expected behavior, not a network fault.
+관련 자료는 [`/configs`](https://github.com/aidana-net/multi-user-enterprise-network/tree/main/configs) 및 [`/results`](https://github.com/aidana-net/multi-user-enterprise-network/tree/main/results)에서 확인할 수 있습니다.
 
-## 10. Known Limitations
+### Configuration
 
-- **DHCP Snooping on L3 switches**: `ip dhcp snooping limit rate` only applies to Layer 2 switchport interfaces. An early attempt to apply it directly to a routed uplink (`no switchport` interface) failed with an `Invalid input` error. DHCP Snooping was ultimately removed from both branch L3 switches rather than reconfigured on the access ports.
-- **DAI on L3 switches**: Dynamic ARP Inspection depends on the DHCP Snooping binding table and VLAN-level enforcement, so it was not implemented on the Busan/Daegu L3 switches.
-- **No ACLs**: Traffic between VLANs and sites is currently unrestricted. ACL and NAT configuration is planned as a separate follow-up project.
+각 장비의 `show running-config` 결과를 저장했습니다.
 
-## 11. Files
+* `configs/Seoul-Router.txt`
+* `configs/Seoul-Switch.txt`
+* `configs/Busan-Router.txt`
+* `configs/Busan-Switch.txt`
+* `configs/Daegu-Router.txt`
+* `configs/Daegu-Switch.txt`
 
-- `multi-site_enterprise_network_with_VLANs_and_OSPF.pkt` — Cisco Packet Tracer topology file
-- `topology.png` — network topology diagram
-- `configs/` — `show running-config` output for every device
-- `results/` — verification command output (OSPF, port security, DHCP snooping, DHCP verification, ping tests)
+### 검증 결과
+
+* `ospf-neighbors-and-routes.txt` — `show ip ospf neighbor` 및 `show ip route`를 통해 세 Router의 OSPF Neighbor 상태와 사이트 간 Routing 정보를 확인했습니다.
+* `port-security.txt` — `show port-security`를 통해 세 Switch의 Sticky MAC 학습 및 Port Security 설정을 확인했습니다.
+* `seoul-dhcp-snooping.txt` — Seoul Switch에서 `show ip dhcp snooping`을 통해 DHCP Snooping 설정을 확인했습니다.
+* `dhcp-verification.txt` — 세 사이트의 PC에서 `ipconfig /all`을 실행하여 중앙 DHCP Server를 통한 IP 주소 할당을 확인했습니다.
+* `site-to-site-ping.txt` — Busan ↔ Seoul, Busan ↔ Daegu, Seoul ↔ Daegu 간의 Site-to-Site Ping Test를 수행했습니다.
+
+### Ping Test 참고 사항
+
+대부분의 Site-to-Site Ping Test에서 첫 번째 Packet이 Timeout되는 현상이 발생했습니다.
+
+이는 송신 장비가 목적지의 MAC Address를 아직 ARP Cache에 저장하지 않아 발생하는 **ARP Resolution Delay** 때문입니다.
+
+ARP Entry가 학습된 이후에는 후속 Packet이 정상적으로 전달되었으며, Packet Loss는 0%로 확인되었습니다.
+
+---
+
+
+## 10. 파일 구성
+
+* `multi-site enterprise network .pkt` — Cisco Packet Tracer Network Topology 파일
+* `topology.png` — 네트워크 토폴로지 다이어그램
+* `configs/` — 모든 장비의 `show running-config` 결과
+* `results/` — OSPF, Port Security, DHCP Snooping, DHCP Verification 및 Ping Test 결과
+
+---
 
 ## Tools
 
-- Cisco Packet Tracer
+* Cisco Packet Tracer
+
