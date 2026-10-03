@@ -42,7 +42,7 @@ Cisco Packet Tracer를 활용하여 소규모 멀티사이트 기업 네트워�
 
 ## 2. 네트워크 토폴로지
 
-[네트워크 토폴로지 보기](https://github.com/aidana-net/multi-user-enterprise-network/blob/main/topology.png)
+![네트워크 토폴로지](./topology.png)
 
 ---
 
